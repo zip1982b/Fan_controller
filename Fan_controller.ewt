@@ -2890,6 +2890,9 @@
     <group>
         <name>inc</name>
         <file>
+            <name>$PROJ_DIR$\inc\cayenne_lpp.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\inc\clock.h</name>
         </file>
         <file>
@@ -2898,7 +2901,19 @@
         <file>
             <name>$PROJ_DIR$\inc\gpio.h</name>
         </file>
+        <file>
+            <name>$PROJ_DIR$\inc\modemRHF78-052.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\inc\RingFIFO.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\inc\uart.h</name>
+        </file>
     </group>
+    <file>
+        <name>$PROJ_DIR$\cayenne_lpp.c</name>
+    </file>
     <file>
         <name>$PROJ_DIR$\clock.c</name>
     </file>
@@ -2907,5 +2922,14 @@
     </file>
     <file>
         <name>$PROJ_DIR$\main.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\modemRHF78-052.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\RingFIFO.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\uart.c</name>
     </file>
 </project>

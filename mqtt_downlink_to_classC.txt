@@ -1,0 +1,6 @@
+
+sudo mosquitto_pub -t "application/3/device/797b87eb82453254/tx" -m "{\"confirmed\": true, \"fPort\": 2, \"data\": \"NnEQ\" }" 
+
+
+payload = 367110 hex
+payload hex -> base64 = NnEQ
