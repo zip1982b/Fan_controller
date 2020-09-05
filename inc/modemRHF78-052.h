@@ -14,7 +14,7 @@ uint8_t compare_answer(const char *correct_answer);
 
 void print_RX_buffer(void);
 
-uint16_t receive_data_from_APP(cayenne_lpp_t *lpp);
+uint8_t receive_data_from_APP(cayenne_lpp_t *lpp, const char *message);
 
 
 #endif /* MODEM_RHF78_H */

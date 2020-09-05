@@ -51,24 +51,39 @@ uint8_t compare_answer(const char *correct_answer){
 }
 
 
-uint16_t receive_data_from_APP(cayenne_lpp_t *lpp){
-	uint16_t n = UART_BytesToRead(2);
+uint8_t receive_data_from_APP(cayenne_lpp_t *lpp, const char *message){
+	uint16_t n = 0;
+	char received_symbol;
+	n = UART_BytesToRead(2);
 	if(n){
 		for(uint8_t i=0; i<=n-1; i++){
-		lpp->buffer[lpp->cursor++] = UART_GetC(2);	
+			received_symbol = (char)UART_GetC(2);
+			if(message[i] == received_symbol){
+				if(i <= 19){
+					continue;
+				}
+				else if(received_symbol != '\"')
+					lpp->buffer[lpp->cursor++] = (uint8_t)received_symbol;
+				return 1;
+			}
+			else continue;	
+		}
 	}
-	}
-	return n;
+	return 0;
 }
+
+
+
 
 
 void print_RX_buffer(void)
 {
 	uint8_t n = UART_BytesToRead(2);
-	for(uint8_t i=0; i<=n-1; i++){
-		char c = UART_GetC(2);
-		printf("%c", c);
-		
+	if(n){
+		for(uint8_t i=0; i<=n-1; i++){
+			char c = UART_GetC(2);
+			printf("%c", c);
+		}
+		puts("\n");	
 	}
-	puts("\n");
 }

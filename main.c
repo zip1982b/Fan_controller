@@ -11,7 +11,7 @@
 
 
 xQueueHandle xQueue_for_send_to_APServer;
-xQueueHandle xQueue_received_data_from_app_server;
+//xQueueHandle xQueue_received_data_from_app_server;
 xQueueHandle xQueue_data_for_Fan;
 
 
@@ -148,6 +148,7 @@ const  char Set_Class[] = "AT+CLASS=C\r\n";
 const  char answer_Class[] = "+CLASS: C\r\n";
 #endif
 
+const char messages_from_APP[] = "+MSG: PORT: 2; RX: \"\n";
 
 
 
@@ -174,9 +175,9 @@ int main()
   RCC_DeInit();
   if(!ClockInit()){
     PortInit();
-	
+	UART_Init(2, &UARTInitStr);
 	xQueue_for_send_to_APServer = xQueueCreate(5, sizeof(cayenne_lpp_t));
-	xQueue_received_data_from_app_server = xQueueCreate(5, sizeof(cayenne_lpp_t));
+	//xQueue_received_data_from_app_server = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	xQueue_data_for_Fan = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	
 	
@@ -203,6 +204,7 @@ void vFan(void *arg){
     vTaskDelay(1000 / portTICK_RATE_MS);
     PortSetLow();
     vTaskDelay(1000 / portTICK_RATE_MS);
+	print_RX_buffer();
   }
 }
 
@@ -213,14 +215,16 @@ void vTemp_Humi_measurement(void *arg){
 	float celsius = 0.2;
 	float humidity = 20.5;
   while(1){
-	celsius = celsius + 0.1;	// measurement temp
-	humidity = humidity + 2.5;	// measurement rh
 	cayenne_lpp_add_temperature(&temp_humi, 1, celsius); //  |1|103|d|d|dec or |1|67|x|x|hex
 	cayenne_lpp_add_relative_humidity(&temp_humi, 1, humidity); //  |1|104|d|d|dec or |1|68|x|x|hex
 	xQueueSendToBack(xQueue_for_send_to_APServer, &temp_humi, 100/portTICK_RATE_MS); // to APP server
-	xQueueSendToBack(xQueue_data_for_Fan, &temp_humi, 100/portTICK_RATE_MS); // to FAN
+	//xQueueSendToBack(xQueue_data_for_Fan, &temp_humi, 100/portTICK_RATE_MS); // to FAN
 	cayenne_lpp_reset(&temp_humi);
-	vTaskDelay(50000 / portTICK_RATE_MS);
+	
+	celsius = celsius + 0.1;	// measurement temp
+	humidity = humidity + 2.5;	// measurement rh
+	
+	vTaskDelay(30000 / portTICK_RATE_MS);
   }
 }
 
@@ -235,6 +239,7 @@ void vLoRaWAN_modem(void *arg){
 	
 	
     //setting up the modem, only once.
+	/*
 	UART_ReadBuffClear(2);
 	UART_WriteBuffClear(2);
 	if(send_AT_command(check_link)){
@@ -700,31 +705,37 @@ void vLoRaWAN_modem(void *arg){
 			#endif
 		}
 	}
-	
+	*/
 // end set up
 	
+	cayenne_lpp_t payload_for_send_to_app = { 0 };
 	cayenne_lpp_t payload = { 0 };
-	uint16_t bytes = 0;
+	uint8_t data_from_APP = 0;
+	UART_ReadBuffClear(2);
+	UART_WriteBuffClear(2);
 	
   while(1){
 	  // waiting for data
-	if(xQueueReceive(xQueue_for_send_to_APServer, &payload, 100/portTICK_RATE_MS) == pdPASS){
+	if(xQueueReceive(xQueue_for_send_to_APServer, &payload_for_send_to_app, 100/portTICK_RATE_MS) == pdPASS){
 		#if defined DEBUG || DEBUG_CLASS_C
-		_print_buffer(&payload);
+		_print_buffer(&payload_for_send_to_app);
 		#endif
-
-		_sprint_buffer(&payload, payload_str, AT_CMSGHEX);
-		cayenne_lpp_reset(&payload); 
-	 
-		//UART_ReadBuffClear(2);??????????????
-		UART_WriteBuffClear(2);
-		send_AT_command(AT_CMSGHEX); 
+		_print_buffer(&payload_for_send_to_app);
+		
+		_sprint_buffer(&payload_for_send_to_app, payload_str, AT_CMSGHEX);
+		cayenne_lpp_reset(&payload_for_send_to_app); 
+		
+		send_AT_command(AT_CMSGHEX);
+		//AT_CMSGHEX[55] = "AT+CMSGHEX=\"";
 	}
-	bytes = receive_data_from_APP(&payload);
-	if(bytes){
+	
+	/*
+	data_from_APP = receive_data_from_APP(&payload, messages_from_APP);
+	if(data_from_APP){
 		xQueueSendToBack(xQueue_data_for_Fan, &payload, 100/portTICK_RATE_MS);
 		cayenne_lpp_reset(&payload);
 	}
+	*/
 	
 	vTaskDelay(10000 / portTICK_RATE_MS);
 	
