@@ -30,6 +30,16 @@ static void _print_buffer(cayenne_lpp_t *lpp)
 }
 
 
+static void get_payload_string(cayenne_lpp_t *lpp, char *payload_byte, char *payload_str)
+{
+    for (uint8_t i = 0; i < lpp->cursor; ++i) {
+        sprintf(payload_byte, "%02X", lpp->buffer[i]);
+		strcat(payload_str, payload_byte);
+    }
+}
+
+
+
 static void _sprint_buffer(cayenne_lpp_t *lpp, char *payload_string, char *dst)
 {
     for (uint8_t i = 0; i < lpp->cursor; ++i) {
@@ -204,7 +214,7 @@ void vFan(void *arg){
     vTaskDelay(1000 / portTICK_RATE_MS);
     PortSetLow();
     vTaskDelay(1000 / portTICK_RATE_MS);
-	print_RX_buffer();
+	//print_RX_buffer();
   }
 }
 
@@ -234,9 +244,6 @@ void vTemp_Humi_measurement(void *arg){
 
 void vLoRaWAN_modem(void *arg){
 	uint8_t settings_is_ok = 0;
-	char AT_CMSGHEX[55] = "AT+CMSGHEX=\""; //dst
-	char payload_str[CAYENNE_LPP_MAX_BUFFER_SIZE];
-	
 	
     //setting up the modem, only once.
 	/*
@@ -709,8 +716,14 @@ void vLoRaWAN_modem(void *arg){
 // end set up
 	
 	cayenne_lpp_t payload_for_send_to_app = { 0 };
+	char payload_byte[1] = {0};
+	char payload_str[20] = {0};
+	char result[CAYENNE_LPP_MAX_BUFFER_SIZE] = {0};
+	
+	
 	cayenne_lpp_t payload = { 0 };
 	uint8_t data_from_APP = 0;
+	
 	UART_ReadBuffClear(2);
 	UART_WriteBuffClear(2);
 	
@@ -720,13 +733,20 @@ void vLoRaWAN_modem(void *arg){
 		#if defined DEBUG || DEBUG_CLASS_C
 		_print_buffer(&payload_for_send_to_app);
 		#endif
-		_print_buffer(&payload_for_send_to_app);
+		//_print_buffer(&payload_for_send_to_app);
 		
-		_sprint_buffer(&payload_for_send_to_app, payload_str, AT_CMSGHEX);
+		get_payload_string(&payload_for_send_to_app, payload_byte, payload_str);
+	    //printf("payload_str - %s\n", payload_str);
+		
+		//_sprint_buffer(&payload_for_send_to_app, payload_str, AT_CMSGHEX);
 		cayenne_lpp_reset(&payload_for_send_to_app); 
 		
-		send_AT_command(AT_CMSGHEX);
-		//AT_CMSGHEX[55] = "AT+CMSGHEX=\"";
+		sprintf(result, "AT+CMSGHEX=\"%s\"\r\n", payload_str);
+	    //printf("result - %s\n", result);
+		send_AT_command(result);
+		
+	    memset (payload_str, '\0', 20);
+	    memset (result, '\0', CAYENNE_LPP_MAX_BUFFER_SIZE);
 	}
 	
 	/*
