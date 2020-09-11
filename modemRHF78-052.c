@@ -40,8 +40,9 @@ uint8_t send_AT_command(const char *commands){
 
 uint8_t compare_answer(const char *correct_answer){
 	uint16_t n = UART_BytesToRead(2);
+	char c;
 	for(uint8_t i=0; i<=n-1; i++){
-		char c = UART_GetC(2);
+		c = UART_GetC(2);
 		if(c == correct_answer[i]){
 			continue;
 		}
@@ -80,10 +81,25 @@ void print_RX_buffer(void)
 {
 	uint8_t n = UART_BytesToRead(2);
 	if(n){
-		for(uint8_t i=0; i<=n-1; i++){
+		for(uint8_t i=0; i<=n-1; i++){ //n-1 ???
 			char c = UART_GetC(2);
 			printf("%c", c);
 		}
-		puts("\n");	
+		puts("\n");	//???
 	}
 }
+
+
+
+void UART_GetS(char *string){
+	uint8_t n = UART_BytesToRead(2);
+	if(n){
+		for(uint8_t i=0; i<=n; i++){
+			string[i] = (char)UART_GetC(2);
+			if(string[i] == '\n'){
+				break;
+			}
+		}
+	}
+}
+

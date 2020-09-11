@@ -989,7 +989,7 @@
                     <item>dst</item>
                     <item>lpp</item>
                     <item>payload_for_send_to_app</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

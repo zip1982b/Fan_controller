@@ -719,11 +719,10 @@ void vLoRaWAN_modem(void *arg){
 	char payload_byte[1] = {0};
 	char payload_str[20] = {0};
 	char result[CAYENNE_LPP_MAX_BUFFER_SIZE] = {0};
-	
-	
+	char receivied_string[50] = {0};
 	cayenne_lpp_t payload = { 0 };
 	uint8_t data_from_APP = 0;
-	
+	uint8_t len = 0;
 	UART_ReadBuffClear(2);
 	UART_WriteBuffClear(2);
 	
@@ -749,13 +748,22 @@ void vLoRaWAN_modem(void *arg){
 	    memset (result, '\0', CAYENNE_LPP_MAX_BUFFER_SIZE);
 	}
 	
-	/*
-	data_from_APP = receive_data_from_APP(&payload, messages_from_APP);
-	if(data_from_APP){
-		xQueueSendToBack(xQueue_data_for_Fan, &payload, 100/portTICK_RATE_MS);
-		cayenne_lpp_reset(&payload);
+	UART_GetS(receivied_string);
+	
+	len = strlen(receivied_string);
+	if(len > 24){
+		if(receivied_string[12] == '2' && receivied_string[19] == '\"' && receivied_string[len-1]=='\"'){
+			for(uint8_t i=20; i<=len-1; i++){
+				payload.buffer[payload.cursor++] = (uint8_t)receivied_string[i];
+			}
+			xQueueSendToBack(xQueue_data_for_Fan, &payload, 100/portTICK_RATE_MS);
+			cayenne_lpp_reset(&payload);
+			
+		}
 	}
-	*/
+	if(len){
+		memset (receivied_string, '\0', 50);
+	}
 	
 	vTaskDelay(10000 / portTICK_RATE_MS);
 	

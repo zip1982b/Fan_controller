@@ -16,5 +16,6 @@ void print_RX_buffer(void);
 
 uint8_t receive_data_from_APP(cayenne_lpp_t *lpp, const char *message);
 
+void UART_GetS(char *string);
 
 #endif /* MODEM_RHF78_H */
