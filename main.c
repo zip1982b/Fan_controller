@@ -214,7 +214,7 @@ void vFan(void *arg){
     vTaskDelay(1000 / portTICK_RATE_MS);
     PortSetLow();
     vTaskDelay(1000 / portTICK_RATE_MS);
-	//print_RX_buffer();
+	
   }
 }
 
@@ -246,7 +246,7 @@ void vLoRaWAN_modem(void *arg){
 	uint8_t settings_is_ok = 0;
 	
     //setting up the modem, only once.
-	/*
+	
 	UART_ReadBuffClear(2);
 	UART_WriteBuffClear(2);
 	if(send_AT_command(check_link)){
@@ -712,7 +712,7 @@ void vLoRaWAN_modem(void *arg){
 			#endif
 		}
 	}
-	*/
+	
 // end set up
 	
 	cayenne_lpp_t payload_for_send_to_app = { 0 };
@@ -747,10 +747,12 @@ void vLoRaWAN_modem(void *arg){
 	    memset (payload_str, '\0', 20);
 	    memset (result, '\0', CAYENNE_LPP_MAX_BUFFER_SIZE);
 	}
+	print_RX_buffer();
 	
-	UART_GetS(receivied_string);
+	//UART_GetS(receivied_string);
 	
-	len = strlen(receivied_string);
+	//len = strlen(receivied_string);
+	/*
 	if(len > 24){
 		if(receivied_string[12] == '2' && receivied_string[19] == '\"' && receivied_string[len-1]=='\"'){
 			for(uint8_t i=20; i<=len-1; i++){
@@ -764,8 +766,8 @@ void vLoRaWAN_modem(void *arg){
 	if(len){
 		memset (receivied_string, '\0', 50);
 	}
-	
-	vTaskDelay(10000 / portTICK_RATE_MS);
+	*/
+	vTaskDelay(5000 / portTICK_RATE_MS);
 	
   }
 }

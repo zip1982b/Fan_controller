@@ -80,10 +80,14 @@ uint8_t receive_data_from_APP(cayenne_lpp_t *lpp, const char *message){
 void print_RX_buffer(void)
 {
 	uint8_t n = UART_BytesToRead(2);
+	
 	if(n){
-		for(uint8_t i=0; i<=n-1; i++){ //n-1 ???
-			char c = UART_GetC(2);
-			printf("%c", c);
+		printf("length = %d\n", n);
+		for(uint8_t i=0; i<=n; i++){ //n-1 ???
+			uint8_t ascii_code = UART_GetC(2);
+			if((ascii_code > 0) && (ascii_code != 255)){
+				printf("%d ", ascii_code);
+			}
 		}
 		puts("\n");	//???
 	}
