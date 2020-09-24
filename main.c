@@ -24,7 +24,7 @@ void vLoRaWAN_modem(void *arg);
 static void _print_buffer(cayenne_lpp_t *lpp)
 {
     for (uint8_t i = 0; i < lpp->cursor; ++i) {
-        printf("dec-%02X ", lpp->buffer[i]);
+        printf("%02X ", lpp->buffer[i]);
     }
     puts("");
 }
@@ -193,7 +193,7 @@ int main()
 	
     xTaskCreate(vTemp_Humi_measurement, "temperature and humidity measurement", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
     xTaskCreate(vFan, "fan operation", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-    xTaskCreate(vLoRaWAN_modem, "RHF78-052 operation", 256, NULL, 2, NULL);
+    xTaskCreate(vLoRaWAN_modem, "RHF78-052 operation", 512, NULL, 2, NULL);
     
     vTaskStartScheduler();
   }
@@ -230,11 +230,10 @@ void vTemp_Humi_measurement(void *arg){
 	xQueueSendToBack(xQueue_for_send_to_APServer, &temp_humi, 100/portTICK_RATE_MS); // to APP server
 	//xQueueSendToBack(xQueue_data_for_Fan, &temp_humi, 100/portTICK_RATE_MS); // to FAN
 	cayenne_lpp_reset(&temp_humi);
+	vTaskDelay(120000 / portTICK_RATE_MS);
 	
 	celsius = celsius + 0.1;	// measurement temp
 	humidity = humidity + 2.5;	// measurement rh
-	
-	vTaskDelay(30000 / portTICK_RATE_MS);
   }
 }
 
@@ -723,12 +722,13 @@ void vLoRaWAN_modem(void *arg){
 	cayenne_lpp_t payload = { 0 };
 	uint8_t data_from_APP = 0;
 	uint8_t len = 0;
+	uint8_t value = 0;
 	UART_ReadBuffClear(2);
 	UART_WriteBuffClear(2);
 	
   while(1){
 	  // waiting for data
-	if(xQueueReceive(xQueue_for_send_to_APServer, &payload_for_send_to_app, 100/portTICK_RATE_MS) == pdPASS){
+	if(xQueueReceive(xQueue_for_send_to_APServer, &payload_for_send_to_app, 50/portTICK_RATE_MS) == pdPASS){
 		#if defined DEBUG || DEBUG_CLASS_C
 		_print_buffer(&payload_for_send_to_app);
 		#endif
@@ -747,28 +747,35 @@ void vLoRaWAN_modem(void *arg){
 	    memset (payload_str, '\0', 20);
 	    memset (result, '\0', CAYENNE_LPP_MAX_BUFFER_SIZE);
 	}
-	print_RX_buffer();
+	//print_RX_buffer();
+	vTaskDelay(1500 / portTICK_RATE_MS);
 	
-	//UART_GetS(receivied_string);
 	
-	//len = strlen(receivied_string);
-	/*
-	if(len > 24){
-		if(receivied_string[12] == '2' && receivied_string[19] == '\"' && receivied_string[len-1]=='\"'){
-			for(uint8_t i=20; i<=len-1; i++){
-				payload.buffer[payload.cursor++] = (uint8_t)receivied_string[i];
+	len = strlen(receivied_string);
+	if((len>=15) && (receivied_string[len-1]=='\n')){
+		//printf("String is received!\n");
+		printf("%s\n", receivied_string);
+		//UART_ReadBuffClear(2);
+		if((receivied_string[12] == '2') && (receivied_string[19] == '\"') && receivied_string[len-3]=='\"'){
+			//channel
+			if(receivied_string[20] == '0' && receivied_string[21] == '2' && receivied_string[22] == '0' && receivied_string[23] == '1'){
+				value = receivied_string[25] - '0';
+				cayenne_lpp_add_digital_output(&payload, 2, value);
 			}
+			
+			_print_buffer(&payload);
 			xQueueSendToBack(xQueue_data_for_Fan, &payload, 100/portTICK_RATE_MS);
 			cayenne_lpp_reset(&payload);
 			
 		}
-	}
-	if(len){
+		//UART_ReadBuffClear(2);
 		memset (receivied_string, '\0', 50);
 	}
-	*/
-	vTaskDelay(5000 / portTICK_RATE_MS);
-	
+	else{
+		UART_GetS(receivied_string, (uint8_t)strlen(receivied_string));
+		//printf("line filling = %s\n", receivied_string);
+	}
+	//vTaskDelay(3000 / portTICK_RATE_MS);
   }
 }
 

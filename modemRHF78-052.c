@@ -95,15 +95,52 @@ void print_RX_buffer(void)
 
 
 
-void UART_GetS(char *string){
-	uint8_t n = UART_BytesToRead(2);
-	if(n){
-		for(uint8_t i=0; i<=n; i++){
-			string[i] = (char)UART_GetC(2);
-			if(string[i] == '\n'){
-				break;
-			}
-		}
-	}
+
+void UART_GetS(char *string, uint8_t length_string){
+    uint8_t bytes_to_read = UART_BytesToRead(2);
+    uint8_t ascii_code = 0;
+    if(bytes_to_read){
+        for(uint8_t i=0; i<bytes_to_read; i++){
+            ascii_code = UART_GetC(2);
+            if((ascii_code > 0) && (ascii_code < 128)){
+                string[i+length_string] = (char)ascii_code;
+            }
+            if(ascii_code == 10){
+                break;
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
