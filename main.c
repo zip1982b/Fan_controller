@@ -1,3 +1,4 @@
+#include "stm32f1xx.h"
 #include "clock.h"
 #include "gpio.h"
 #include "FreeRTOS.h"
@@ -6,13 +7,12 @@
 
 #include "string.h"
 #include "uart.h"
+#include "timer.h"
 #include "cayenne_lpp.h"
 #include "modemRHF78-052.h"
 
 
-#define TIM_EnableIT_UPDATE(TIMx) SET_BIT(TIMx->DIER, TIM_DIER_UIE)
-#define TIM_EnableCounter(TIMx) SET_BIT(TIMx->CR1, TIM_CR1_CEN)
-#define TIM_DisableCounter(TIMx) CLEAR_BIT(TIMx->CR1, TIM_CR1_CEN)
+
 
 
 
@@ -20,13 +20,13 @@ xQueueHandle xQueue_for_send_to_APServer;
 //xQueueHandle xQueue_received_data_from_app_server;
 xQueueHandle xQueue_data_for_Fan;
 
-static void TIM2_Init(void);
+
 
 void vFan(void *arg);
 void vTemp_Humi_measurement(void *arg);
 void vLoRaWAN_modem(void *arg);
 
-__IO uint8_t tim2_count = 0;
+
 
 static void _print_buffer(cayenne_lpp_t *lpp)
 {
@@ -183,13 +183,7 @@ static const UARTInitStructure_t UARTInitStr =
 
 
 
-static void TIM2_Init(void)
-{
-  SET_BIT(RCC->APB1ENR, RCC_APB1ENR_TIM2EN);
-  NVIC_EnableIRQ(TIM2_IRQn);
-  WRITE_REG(TIM2->PSC, 600);
-  WRITE_REG(TIM2->ARR, 62500);
-}
+
 
 
 
@@ -203,9 +197,9 @@ int main()
 	TIM_EnableIT_UPDATE(TIM2);
 	TIM_EnableCounter(TIM2);
 	
-	xQueue_for_send_to_APServer = xQueueCreate(5, sizeof(cayenne_lpp_t));
+	//xQueue_for_send_to_APServer = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	//xQueue_received_data_from_app_server = xQueueCreate(5, sizeof(cayenne_lpp_t));
-	xQueue_data_for_Fan = xQueueCreate(5, sizeof(cayenne_lpp_t));
+	//xQueue_data_for_Fan = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	
 	
     //xTaskCreate(vTemp_Humi_measurement, "temperature and humidity measurement", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
@@ -801,15 +795,3 @@ void vLoRaWAN_modem(void *arg){
 
 
 
-void TIM2_IRQHandler(void)
-{
-  if(READ_BIT(TIM2->SR, TIM_SR_UIF))
-  {
-    CLEAR_BIT(TIM2->SR, TIM_SR_UIF);
-	if(READ_BIT(GPIOC->ODR, GPIO_ODR_ODR13)){
-		PortSetHi();
-	}
-	else PortSetLow();
-	
-  }
-}

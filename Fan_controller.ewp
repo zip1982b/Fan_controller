@@ -4302,6 +4302,9 @@
             <name>$PROJ_DIR$\inc\RingFIFO.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\inc\timer.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\inc\uart.h</name>
         </file>
     </group>
@@ -4322,6 +4325,9 @@
     </file>
     <file>
         <name>$PROJ_DIR$\RingFIFO.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\timer.c</name>
     </file>
     <file>
         <name>$PROJ_DIR$\uart.c</name>
