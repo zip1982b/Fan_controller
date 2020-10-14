@@ -191,7 +191,7 @@ int main()
 {
   RCC_DeInit();
   if(!ClockInit()){
-    PortInit();
+    GPIO_EXTI_Init();
 	UART_Init(2, &UARTInitStr);
 	TIM2_Init();
 	TIM_EnableIT_UPDATE(TIM2);

@@ -1,6 +1,6 @@
 
 
-void PortInit(void);
+void GPIO_EXTI_Init(void);
 
 
 void PortSetHi(void);
