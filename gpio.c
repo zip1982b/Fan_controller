@@ -2,25 +2,30 @@
 
 void GPIO_EXTI_Init(void)
 {
-  RCC->APB2ENR |= RCC_APB2ENR_IOPBEN; //Тактирование GPIOB DHT22, Zero_Sensor
+  RCC->APB2ENR |= RCC_APB2ENR_IOPBEN; //Тактирование GPIOB = PB13-DHT22, PB12-Zero_Sensor
   RCC->APB2ENR |= RCC_APB2ENR_IOPCEN; // enable GPIOC LED
   RCC->APB2ENR |= RCC_APB2ENR_AFIOEN; //Тактирование AFIO
   
-  GPIOC->CRH &= ~(GPIO_CRH_MODE13 | GPIO_CRH_CNF13); //reset all
+  
   
   /*
     Настройка GPIO
-      Пин: PB13
-      Режим: Input floating (external pull-up 5KOhm)
+    Пин: PB13 - DHT22
+	MODE: output 2 MHz
+	CNF: Open-drain mode
+    (external pull-up 5KOhm)
 	  
-	  Пин: PC13 - LED
+	Пин: PC13 - LED
+	MODE: output 2 MHz
+    CNF: push-pull mode
   */
-  GPIOB->CRH &= ~(GPIO_CRL_MODE13 | GPIO_CRL_CNF13);
-  GPIOB->CRH |= (0x01 << GPIO_CRH_CNF13_Pos); //Input floating (external pull-up 5KOhm)
-  //GPIOB->ODR |= (1 << 0); //Подтяжка вверх
+  
+  GPIOB->CRH &= ~(GPIO_CRH_MODE13 | GPIO_CRH_CNF13); //reset PB13
+  GPIOB->CRH |= (0x02 << GPIO_CRH_MODE13_Pos) | (0x01 << GPIO_CRH_CNF13_Pos);
   
   //MODE: output 2 MHz
   //CNF: push-pull mode
+  GPIOC->CRH &= ~(GPIO_CRH_MODE13 | GPIO_CRH_CNF13); //reset PC13
   GPIOC->CRH |= (0x02 << GPIO_CRH_MODE13_Pos) | (0x00 << GPIO_CRH_CNF13_Pos);
   
   
@@ -64,4 +69,9 @@ void EXTI13_IRQHandler(void)
   asm("nop");
   asm("nop");
   asm("nop");
+  
+  
+  
+  
+  
 }
