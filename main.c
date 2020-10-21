@@ -193,9 +193,10 @@ int main()
   if(!ClockInit()){
     GPIO_EXTI_Init();
 	UART_Init(2, &UARTInitStr);
-	TIM2_Init();
-	TIM_EnableIT_UPDATE(TIM2);
-	TIM_EnableCounter(TIM2);
+	TIM3_Init();
+	TIM_EnableIT_UPDATE(TIM3);
+	TIM_EnableIT_COMPARE(TIM3);
+	TIM_EnableCounter(TIM3);
 	
 	//xQueue_for_send_to_APServer = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	//xQueue_received_data_from_app_server = xQueueCreate(5, sizeof(cayenne_lpp_t));

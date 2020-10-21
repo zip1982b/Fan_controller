@@ -3,24 +3,31 @@
 
 
 
-void TIM2_Init(void)
+void TIM3_Init(void)
 {
-  SET_BIT(RCC->APB1ENR, RCC_APB1ENR_TIM2EN);
-  NVIC_EnableIRQ(TIM2_IRQn);
-  WRITE_REG(TIM2->PSC, 1200);
-  WRITE_REG(TIM2->ARR, 60606);
+  SET_BIT(RCC->APB1ENR, RCC_APB1ENR_TIM3EN);
+  NVIC_EnableIRQ(TIM3_IRQn);
+  WRITE_REG(TIM3->PSC, 1200);
+  WRITE_REG(TIM3->ARR, 60606);
+  WRITE_REG(TIM3->CCR1, 545); // T=0.000033s, f=30000Hz, need 18ms
+  //SET_BIT(TIM3->DIER, TIM_DIER_CC1IE); // Capture/Compare 1 interrupt enable
+  
 }
 
 
-void TIM2_IRQHandler(void)
+void TIM3_IRQHandler(void)
 {
-  if(READ_BIT(TIM2->SR, TIM_SR_UIF)){
-    CLEAR_BIT(TIM2->SR, TIM_SR_UIF);
+  if(READ_BIT(TIM3->SR, TIM_SR_UIF)){
+    CLEAR_BIT(TIM3->SR, TIM_SR_UIF);
 	if(READ_BIT(GPIOC->ODR, GPIO_ODR_ODR13)){
 		PortSetLow();
 	}
 	else PortSetHi();
   }
+  
+  
+  
+  
   
   if(Start){
 	  GPIO_ODR_ODR13 = 1; // or BRR BHRR
