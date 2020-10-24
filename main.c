@@ -194,9 +194,11 @@ int main()
     GPIO_EXTI_Init();
 	UART_Init(2, &UARTInitStr);
 	TIM3_Init();
-	TIM_EnableIT_UPDATE(TIM3);
-	TIM_EnableIT_COMPARE(TIM3);
-	TIM_EnableCounter(TIM3);
+	TIM_EnableIT_UPDATE(TIM3); //enable interrupt
+	TIM_EnableIT_COMPARE(TIM3); //enable interrupt
+	
+	
+	
 	
 	//xQueue_for_send_to_APServer = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	//xQueue_received_data_from_app_server = xQueueCreate(5, sizeof(cayenne_lpp_t));
@@ -222,11 +224,10 @@ int main()
 void vFan(void *arg){
   
   while(1){
-    //PortSetHi();
+    PortSetHi();
     vTaskDelay(1000 / portTICK_RATE_MS);
-    //PortSetLow();
-    //vTaskDelay(1000 / portTICK_RATE_MS);
-	
+    PortSetLow();
+    vTaskDelay(1000 / portTICK_RATE_MS);
   }
 }
 
