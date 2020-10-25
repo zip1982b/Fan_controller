@@ -195,7 +195,7 @@ int main()
 	UART_Init(2, &UARTInitStr);
 	TIM3_Init();
 	TIM_EnableIT_UPDATE(TIM3); //enable interrupt
-	TIM_EnableIT_COMPARE(TIM3); //enable interrupt
+	TIM_EnableIT_COMPARE(TIM3); //enabёle interrupt
 	
 	
 	
@@ -224,10 +224,11 @@ int main()
 void vFan(void *arg){
   
   while(1){
-    PortSetHi();
-    vTaskDelay(1000 / portTICK_RATE_MS);
-    PortSetLow();
-    vTaskDelay(1000 / portTICK_RATE_MS);
+    //PortSetHi();
+    vTaskDelay(5000 / portTICK_RATE_MS);
+    //PortSetLow();
+	DHT22_Start();
+    //vTaskDelay(5000 / portTICK_RATE_MS);
   }
 }
 

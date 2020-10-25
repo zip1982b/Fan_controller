@@ -14,7 +14,7 @@ void TIM3_Init(void)
   CLEAR_BIT(TIM3->CCMR1, TIM_CCMR1_OC1M_2);
   
   CLEAR_BIT(TIM3->CCMR1, TIM_CCMR1_OC1PE);//Preload register on TIMx_CCR1 disabled. 										//TIMx_CCR1 can be written at anytime.
-  CLEAR_BIT(TIM3->CCER, TIM_CCER_CC1P); 	//output polarity
+  SET_BIT(TIM3->CCER, TIM_CCER_CC1P); 	//output polarity
 											//0: OC1 active high.
 											//1: OC1 active low.
   SET_BIT(TIM3->CCER, TIM_CCER_CC1E); //output enable. 1: On - OC1 signal is output on the corresponding output pin.

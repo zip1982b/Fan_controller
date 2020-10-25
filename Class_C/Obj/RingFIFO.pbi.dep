@@ -1,5 +1,5 @@
-RingFIFO.pbi: D:\workspace\Fan_controller\RingFIFO.c \
-  D:\workspace\Fan_controller\inc\RingFIFO.h \
+RingFIFO.pbi: C:\Users\MrZang\IAR_prj\Fan_controller\RingFIFO.c \
+  C:\Users\MrZang\IAR_prj\Fan_controller\inc\RingFIFO.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\stdint.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\ycheck.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\yvals.h \
