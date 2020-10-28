@@ -11,10 +11,10 @@ void TIM3_Init(void)
   WRITE_REG(TIM3->ARR, 60606);
   SET_BIT(TIM3->CCMR1, TIM_CCMR1_OC1M_0); //OC1M = 011  Toggle - OC1REF toggles when TIM3_CNT=TIM3_CCR1.
   SET_BIT(TIM3->CCMR1, TIM_CCMR1_OC1M_1);
-  CLEAR_BIT(TIM3->CCMR1, TIM_CCMR1_OC1M_2);
+  CLEAR_BIT(TIM3->CCMR1, TIM_CCMR1_OC1M_2); 
   
-  CLEAR_BIT(TIM3->CCMR1, TIM_CCMR1_OC1PE);//Preload register on TIMx_CCR1 disabled. 										//TIMx_CCR1 can be written at anytime.
-  SET_BIT(TIM3->CCER, TIM_CCER_CC1P); 	//output polarity
+  CLEAR_BIT(TIM3->CCMR1, TIM_CCMR1_OC1PE);//Preload register on TIMx_CCR1 disabled. TIMx_CCR1 can be written at anytime.
+  SET_BIT(TIM3->CCER, TIM_CCER_CC1P); 	//output polarity 
 											//0: OC1 active high.
 											//1: OC1 active low.
   SET_BIT(TIM3->CCER, TIM_CCER_CC1E); //output enable. 1: On - OC1 signal is output on the corresponding output pin.
@@ -23,8 +23,18 @@ void TIM3_Init(void)
 }
 
 
+uint8_t dht22_GetData(uint8_t *data)
+{
+  uint8_t i, j = 0;
+  DHT22_Start();
+  
+  
+}
+
+
+
 void DHT22_Start(void){
-	WRITE_REG(TIM3->CCR1, 5); // T=0.000033s, f=30000Hz, need 1sec delay (5-30308)
+	WRITE_REG(TIM3->CCR1, 5); // T=0.000033s, f=30000Hz, need 1 sec delay (5-30308)
 	TIM_EnableCounter(TIM3);
 }
 
@@ -34,15 +44,19 @@ void TIM3_IRQHandler(void)
 {
   if(READ_BIT(TIM3->SR, TIM_SR_UIF)){
     CLEAR_BIT(TIM3->SR, TIM_SR_UIF);
-	TIM_DisableCounter(TIM3);
+	//TIM_DisableCounter(TIM3);
   }
-  
+
   if(READ_BIT(TIM3->SR, TIM_SR_CC1IF)){
     CLEAR_BIT(TIM3->SR, TIM_SR_CC1IF);
-	WRITE_REG(TIM3->CCR1, 30308); // T=0.000033s, f=30000Hz, need 1sec delay (5-30308)
+	if(READ_REG(TIM3->CCR1) == 5) { WRITE_REG(TIM3->CCR1, 30308); }
+	else if (READ_REG(TIM3->CCR1) == 30308){
+		WRITE_REG(TIM3->CCR1, 0);
+		TIM_DisableCounter(TIM3);
+		
+		//переводим ch1 TIM3 на вход
+		
+		
+	}
   }
-  
 }
-
-
-

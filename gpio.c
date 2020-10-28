@@ -6,9 +6,7 @@ void GPIO_EXTI_Init(void)
   RCC->APB2ENR |= RCC_APB2ENR_IOPBEN; //Тактирование GPIOB = PB12-Zero_Sensor, PB6-FAN
   RCC->APB2ENR |= RCC_APB2ENR_IOPCEN; // enable GPIOC LED
   RCC->APB2ENR |= RCC_APB2ENR_AFIOEN; //Тактирование AFIO
-  
-  
-  
+
   /*
     Настройка GPIO
     Пин: PA6 - DHT22
@@ -16,8 +14,6 @@ void GPIO_EXTI_Init(void)
 	CNF: Open-drain mode
     (external pull-up 10KOhm)
   */
-  //GPIOA->CRL &= ~(GPIO_CRH_MODE6 | GPIO_CRH_CNF6); //reset PA6
-  //GPIOA->CRL |= (0x02 << GPIO_CRH_MODE6_Pos) | (0x01 << GPIO_CRH_CNF6_Pos);
   SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_0); // alternate open-drain
   SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_1); // alternate open-drain
   
@@ -32,7 +28,6 @@ void GPIO_EXTI_Init(void)
   */
   GPIOC->CRH &= ~(GPIO_CRH_MODE13 | GPIO_CRH_CNF13); //reset PC13
   GPIOC->CRH |= (0x02 << GPIO_CRH_MODE13_Pos) | (0x00 << GPIO_CRH_CNF13_Pos);
-  
   
   
   /*
@@ -65,7 +60,7 @@ void PortSetLow(void)
 }
 
 
-
+/*
 void EXTI13_IRQHandler(void)
 {
   EXTI->PR = EXTI_PR_PR13; //Сбрасываем флаг прерывания 
@@ -74,9 +69,6 @@ void EXTI13_IRQHandler(void)
   asm("nop");
   asm("nop");
   asm("nop");
-  
-  
-  
-  
-  
+   
 }
+*/

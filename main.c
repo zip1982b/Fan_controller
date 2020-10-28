@@ -225,7 +225,7 @@ void vFan(void *arg){
   
   while(1){
     //PortSetHi();
-    vTaskDelay(5000 / portTICK_RATE_MS);
+    vTaskDelay(3000 / portTICK_RATE_MS);
     //PortSetLow();
 	DHT22_Start();
     //vTaskDelay(5000 / portTICK_RATE_MS);

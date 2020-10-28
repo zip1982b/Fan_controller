@@ -1,21 +1,20 @@
-tasks.pbi: \
-  C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\inc\stack_macros.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\inc\timers.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\inc\list.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\inc\task.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\inc\mpu_wrappers.h \
+tasks.pbi: D:\workspace\Fan_controller\FreeRTOS\inc\stack_macros.h \
+  D:\workspace\Fan_controller\FreeRTOS\inc\timers.h \
+  D:\workspace\Fan_controller\FreeRTOS\inc\list.h \
+  D:\workspace\Fan_controller\FreeRTOS\inc\task.h \
+  D:\workspace\Fan_controller\FreeRTOS\inc\mpu_wrappers.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\iar_intrinsics_common.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\iccarm_builtin.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\intrinsics.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\inc\portmacro.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\inc\deprecated_definitions.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\inc\portable.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\inc\projdefs.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\inc\FreeRTOSConfig.h \
+  D:\workspace\Fan_controller\FreeRTOS\inc\portmacro.h \
+  D:\workspace\Fan_controller\FreeRTOS\inc\deprecated_definitions.h \
+  D:\workspace\Fan_controller\FreeRTOS\inc\portable.h \
+  D:\workspace\Fan_controller\FreeRTOS\inc\projdefs.h \
+  D:\workspace\Fan_controller\inc\FreeRTOSConfig.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\ycheck.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\stdint.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\stddef.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\inc\FreeRTOS.h \
+  D:\workspace\Fan_controller\FreeRTOS\inc\FreeRTOS.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\DLib_Product_string.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\string.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\DLib_Product_stdlib.h \
@@ -25,4 +24,4 @@ tasks.pbi: \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\DLib_Defaults.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\yvals.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\stdlib.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\src\tasks.c
+  D:\workspace\Fan_controller\FreeRTOS\src\tasks.c
