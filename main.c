@@ -194,8 +194,7 @@ int main()
     GPIO_EXTI_Init();
 	UART_Init(2, &UARTInitStr);
 	TIM3_Init();
-	TIM_EnableIT_UPDATE(TIM3); //enable interrupt
-	TIM_EnableIT_COMPARE(TIM3); //enabёle interrupt
+	
 	
 	
 	
