@@ -1,13 +1,13 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.50.4.261/W32 for ARM                  28/Oct/2020  15:42:10
+# IAR ELF Linker V8.50.4.261/W32 for ARM                  30/Oct/2020  14:20:49
 # Copyright 2007-2020 IAR Systems AB.
 #
 #    Output file  =  D:\workspace\Fan_controller\Class_C\Exe\Fan_controller.out
 #    Map file     =
 #        D:\workspace\Fan_controller\Class_C\List\Fan_controller.map
 #    Command line =
-#        -f C:\Users\1FB5~1\AppData\Local\Temp\EW5DAD.tmp
+#        -f C:\Users\1FB5~1\AppData\Local\Temp\EW964D.tmp
 #        (D:\workspace\Fan_controller\Class_C\Obj\cayenne_lpp.o
 #        D:\workspace\Fan_controller\Class_C\Obj\clock.o
 #        D:\workspace\Fan_controller\Class_C\Obj\croutine.o
@@ -73,7 +73,7 @@ initialize by copy { rw };
   .intvec            ro code   0x800'0000    0xec  startup_stm32f103xb.o [1]
                              - 0x800'00ec    0xec
 
-"P1":                                      0x1068
+"P1":                                      0x104c
   .text              ro code   0x800'00ec   0x5f4  tasks.o [1]
   .text              ro code   0x800'06e0    0x68  heap_1.o [1]
   .text              ro code   0x800'0748    0x98  list.o [1]
@@ -82,27 +82,34 @@ initialize by copy { rw };
   .text              ro code   0x800'094c   0x224  uart.o [1]
   .text              ro code   0x800'0b70    0x9a  RingFIFO.o [1]
   .text              ro code   0x800'0c0a    0x3a  zero_init3.o [4]
-  .text              ro code   0x800'0c44    0xf8  timer.o [1]
-  .text              ro code   0x800'0d3c    0xec  clock.o [1]
-  .text              ro code   0x800'0e28    0x74  main.o [1]
-  .text              ro code   0x800'0e9c    0x5c  gpio.o [1]
-  .text              ro code   0x800'0ef8    0x58  system_stm32f1xx.o [1]
-  .text              ro code   0x800'0f50    0x2e  copy_init3.o [4]
-  .text              ro code   0x800'0f80    0x2c  iarttio.o [5]
-  .text              ro code   0x800'0fac     0xc  XShttio.o [2]
-  .text              ro code   0x800'0fb8    0x28  data_init.o [4]
-  .iar.init_table    const     0x800'0fe0    0x24  - Linker created -
-  .text              ro code   0x800'1004    0x1e  cmain.o [4]
-  .text              ro code   0x800'1022     0x4  low_level_init.o [2]
-  .text              ro code   0x800'1026     0x4  exit.o [2]
-  .text              ro code   0x800'102c     0xa  cexit.o [4]
-  .text              ro code   0x800'1038    0x14  exit.o [5]
-  .rodata            const     0x800'104c    0x10  main.o [1]
-  .text              ro code   0x800'105c    0x10  startup_stm32f103xb.o [1]
-  .rodata            const     0x800'106c     0xc  main.o [1]
-  .text              ro code   0x800'1078     0xc  cstartup_M.o [4]
-  Initializer bytes  const     0x800'1084     0xc  <for P2-1>
-  .rodata            const     0x800'1090     0x8  tasks.o [1]
+  .text              ro code   0x800'0c44    0xf4  timer.o [1]
+  .text              ro code   0x800'0d38    0xec  clock.o [1]
+  .text              ro code   0x800'0e24    0x5c  gpio.o [1]
+  .text              ro code   0x800'0e80    0x5c  main.o [1]
+  .text              ro code   0x800'0edc    0x58  system_stm32f1xx.o [1]
+  .text              ro code   0x800'0f34    0x2e  copy_init3.o [4]
+  .text              ro code   0x800'0f64    0x2c  iarttio.o [5]
+  .text              ro code   0x800'0f90     0xc  XShttio.o [2]
+  .text              ro code   0x800'0f9c    0x28  data_init.o [4]
+  .iar.init_table    const     0x800'0fc4    0x24  - Linker created -
+  .text              ro code   0x800'0fe8    0x1e  cmain.o [4]
+  .text              ro code   0x800'1006     0x4  low_level_init.o [2]
+  .text              ro code   0x800'100a     0x4  exit.o [2]
+  .text              ro code   0x800'1010     0xa  cexit.o [4]
+  .text              ro code   0x800'101c    0x14  exit.o [5]
+  .rodata            const     0x800'1030    0x10  main.o [1]
+  .text              ro code   0x800'1040    0x10  startup_stm32f103xb.o [1]
+  .rodata            const     0x800'1050     0xc  main.o [1]
+  .text              ro code   0x800'105c     0xc  cstartup_M.o [4]
+  Initializer bytes  const     0x800'1068     0xc  <for P2-1>
+  .rodata            const     0x800'1074     0x8  tasks.o [1]
+  .text              ro code   0x800'107c     0x4  startup_stm32f103xb.o [1]
+  .text              ro code   0x800'1080     0x4  startup_stm32f103xb.o [1]
+  .text              ro code   0x800'1084     0x4  startup_stm32f103xb.o [1]
+  .text              ro code   0x800'1088     0x4  startup_stm32f103xb.o [1]
+  .text              ro code   0x800'108c     0x4  startup_stm32f103xb.o [1]
+  .text              ro code   0x800'1090     0x4  startup_stm32f103xb.o [1]
+  .text              ro code   0x800'1094     0x4  startup_stm32f103xb.o [1]
   .text              ro code   0x800'1098     0x4  startup_stm32f103xb.o [1]
   .text              ro code   0x800'109c     0x4  startup_stm32f103xb.o [1]
   .text              ro code   0x800'10a0     0x4  startup_stm32f103xb.o [1]
@@ -143,16 +150,9 @@ initialize by copy { rw };
   .text              ro code   0x800'112c     0x4  startup_stm32f103xb.o [1]
   .text              ro code   0x800'1130     0x4  startup_stm32f103xb.o [1]
   .text              ro code   0x800'1134     0x4  startup_stm32f103xb.o [1]
-  .text              ro code   0x800'1138     0x4  startup_stm32f103xb.o [1]
-  .text              ro code   0x800'113c     0x4  startup_stm32f103xb.o [1]
-  .text              ro code   0x800'1140     0x4  startup_stm32f103xb.o [1]
-  .text              ro code   0x800'1144     0x4  startup_stm32f103xb.o [1]
-  .text              ro code   0x800'1148     0x4  startup_stm32f103xb.o [1]
-  .text              ro code   0x800'114c     0x4  startup_stm32f103xb.o [1]
-  .text              ro code   0x800'1150     0x4  startup_stm32f103xb.o [1]
-  .rodata            const     0x800'1154     0x0  zero_init3.o [4]
-  .rodata            const     0x800'1154     0x0  copy_init3.o [4]
-                             - 0x800'1154  0x1068
+  .rodata            const     0x800'1138     0x0  zero_init3.o [4]
+  .rodata            const     0x800'1138     0x0  copy_init3.o [4]
+                             - 0x800'1138  0x104c
 
 "P2", part 1 of 3:                            0xc
   P2-1                        0x2000'0000     0xc  <Init block>
@@ -201,7 +201,7 @@ Unused ranges:
 
          From           To    Size
          ----           --    ----
-   0x800'1154   0x800'ffff  0xeeac
+   0x800'1138   0x800'ffff  0xeec8
   0x2000'4e30  0x2000'4fff   0x1d0
 
 
@@ -217,7 +217,7 @@ Zero (__iar_zero_init3)
 
 Copy (__iar_copy_init3)
     1 source range, total size 0xc:
-           0x800'1084     0xc
+           0x800'1068     0xc
     1 destination range, total size 0xc:
           0x2000'0000     0xc
 
@@ -239,16 +239,16 @@ D:\workspace\Fan_controller\Class_C\Obj: [1]
     gpio.o                      92
     heap_1.o                   104            17'416
     list.o                     152
-    main.o                     116       28
+    main.o                      92       28
     port.o                     228        4        4
     portasm.o                  136
     startup_stm32f103xb.o      440
     system_stm32f1xx.o          88
     tasks.o                  1'524        8      260
-    timer.o                    248
+    timer.o                    244
     uart.o                     548               278
     ------------------------------------------------
-    Total:                   4'066       40   17'958
+    Total:                   4'038       40   17'958
 
 dl7M_tln.a: [2]
     XShttio.o                   12        8        8
@@ -280,7 +280,7 @@ shb_l.a: [5]
     Gaps                         6
     Linker created                       36    2'048
 ----------------------------------------------------
-    Grand Total:             4'352       84   20'014
+    Grand Total:             4'324       84   20'014
 
 
 *******************************************************************************
@@ -289,23 +289,23 @@ shb_l.a: [5]
 
 Entry                       Address    Size  Type      Object
 -----                       -------    ----  ----      ------
-.iar.init_table$$Base    0x800'0fe0           --   Gb  - Linker created -
-.iar.init_table$$Limit   0x800'1004           --   Gb  - Linker created -
-?main                    0x800'1005          Code  Gb  cmain.o [4]
+.iar.init_table$$Base    0x800'0fc4           --   Gb  - Linker created -
+.iar.init_table$$Limit   0x800'0fe8           --   Gb  - Linker created -
+?main                    0x800'0fe9          Code  Gb  cmain.o [4]
 CSTACK$$Base            0x2000'4630           --   Gb  - Linker created -
 CSTACK$$Limit           0x2000'4e30           --   Gb  - Linker created -
-ClockInit                0x800'0d3d    0x86  Code  Gb  clock.o [1]
-DHT22_Start              0x800'0cbb    0x12  Code  Gb  timer.o [1]
+ClockInit                0x800'0d39    0x86  Code  Gb  clock.o [1]
+DHT22_Start              0x800'0c85    0x12  Code  Gb  timer.o [1]
 Decr                     0x800'0b95     0xe  Code  Lc  RingFIFO.o [1]
-GPIO_EXTI_Init           0x800'0e9d    0x50  Code  Gb  gpio.o [1]
+GPIO_EXTI_Init           0x800'0e25    0x50  Code  Gb  gpio.o [1]
 Incr                     0x800'0b85    0x10  Code  Lc  RingFIFO.o [1]
 NVIC_EnableIRQ           0x800'0c45    0x14  Code  Lc  timer.o [1]
 NVIC_EnableIRQ           0x800'094d    0x14  Code  Lc  uart.o [1]
 PendSV_Handler           0x800'08c5          Code  Gb  portasm.o [1]
-RCC_DeInit               0x800'0dc3    0x56  Code  Gb  clock.o [1]
+RCC_DeInit               0x800'0dbf    0x56  Code  Gb  clock.o [1]
 RXNEIEnable              0x800'0adb     0xa  Code  Lc  uart.o [1]
-Region$$Table$$Base      0x800'0fe0           --   Gb  - Linker created -
-Region$$Table$$Limit     0x800'1004           --   Gb  - Linker created -
+Region$$Table$$Base      0x800'0fc4           --   Gb  - Linker created -
+Region$$Table$$Limit     0x800'0fe8           --   Gb  - Linker created -
 RingBuffGet              0x800'0bcd    0x3a  Code  Gb  RingFIFO.o [1]
 RingBuffInit             0x800'0ba3     0xe  Code  Gb  RingFIFO.o [1]
 RingBuffNumOfItems       0x800'0c07     0x4  Code  Gb  RingFIFO.o [1]
@@ -314,33 +314,33 @@ RingIncr                 0x800'0b71    0x14  Code  Lc  RingFIFO.o [1]
 RxPinInit                0x800'0aa3    0x2e  Code  Lc  uart.o [1]
 SVC_Handler              0x800'090b          Code  Gb  portasm.o [1]
 SysTick_Handler          0x800'0865    0x28  Code  Gb  port.o [1]
-SystemInit               0x800'0ef9    0x3e  Code  Gb  system_stm32f1xx.o [1]
-TIM3_IRQHandler          0x800'0ccd    0x48  Code  Gb  timer.o [1]
-TIM3_Init                0x800'0c59    0x62  Code  Gb  timer.o [1]
+SystemInit               0x800'0edd    0x3e  Code  Gb  system_stm32f1xx.o [1]
+TIM3_IRQHandler          0x800'0c97    0x7e  Code  Gb  timer.o [1]
+TIM3_Init                0x800'0c59    0x2c  Code  Gb  timer.o [1]
 TXEIDisable              0x800'0ad1     0xa  Code  Lc  uart.o [1]
 TxPinInit                0x800'0a77    0x2c  Code  Lc  uart.o [1]
-UARTInitStr              0x800'106c     0xc  Data  Lc  main.o [1]
+UARTInitStr              0x800'1050     0xc  Data  Lc  main.o [1]
 UART_Init                0x800'0961    0x9c  Code  Gb  uart.o [1]
 USART2_IRQHandler        0x800'0ae5    0x52  Code  Gb  uart.o [1]
 USART2_IRQHandler::tmp  0x2000'462c     0x2  Data  Lc  uart.o [1]
-__cmain                  0x800'1005          Code  Gb  cmain.o [4]
-__exit                   0x800'1039    0x14  Code  Gb  exit.o [5]
-__iar_close_ttio         0x800'0f81    0x2c  Code  Gb  iarttio.o [5]
-__iar_copy_init3         0x800'0f51    0x2e  Code  Gb  copy_init3.o [4]
-__iar_data_init3         0x800'0fb9    0x28  Code  Gb  data_init.o [4]
-__iar_lookup_ttioh       0x800'0fad     0x4  Code  Gb  XShttio.o [2]
-__iar_program_start      0x800'1079          Code  Gb  cstartup_M.o [4]
+__cmain                  0x800'0fe9          Code  Gb  cmain.o [4]
+__exit                   0x800'101d    0x14  Code  Gb  exit.o [5]
+__iar_close_ttio         0x800'0f65    0x2c  Code  Gb  iarttio.o [5]
+__iar_copy_init3         0x800'0f35    0x2e  Code  Gb  copy_init3.o [4]
+__iar_data_init3         0x800'0f9d    0x28  Code  Gb  data_init.o [4]
+__iar_lookup_ttioh       0x800'0f91     0x4  Code  Gb  XShttio.o [2]
+__iar_program_start      0x800'105d          Code  Gb  cstartup_M.o [4]
 __iar_ttio_handles      0x2000'0004     0x8  Data  Lc  XShttio.o [2]
 __iar_zero_init3         0x800'0c0b    0x3a  Code  Gb  zero_init3.o [4]
-__low_level_init         0x800'1023     0x4  Code  Gb  low_level_init.o [2]
+__low_level_init         0x800'1007     0x4  Code  Gb  low_level_init.o [2]
 __vector_table           0x800'0000          Data  Gb  startup_stm32f103xb.o [1]
-_call_main               0x800'1011          Code  Gb  cmain.o [4]
-_exit                    0x800'102d          Code  Gb  cexit.o [4]
-_main                    0x800'101f          Code  Gb  cmain.o [4]
+_call_main               0x800'0ff5          Code  Gb  cmain.o [4]
+_exit                    0x800'1011          Code  Gb  cexit.o [4]
+_main                    0x800'1003          Code  Gb  cmain.o [4]
 _uart_en                 0x800'0a6d     0xa  Code  Lc  uart.o [1]
 _uart_init               0x800'09fd    0x70  Code  Lc  uart.o [1]
-exit                     0x800'1027     0x4  Code  Gb  exit.o [2]
-main                     0x800'0e29    0x56  Code  Gb  main.o [1]
+exit                     0x800'100b     0x4  Code  Gb  exit.o [2]
+main                     0x800'0e81    0x42  Code  Gb  main.o [1]
 prvAddCurrentTaskToDelayedList
                          0x800'0631    0x6e  Code  Lc  tasks.o [1]
 prvAddNewTaskToReadyList
@@ -376,7 +376,7 @@ uxListRemove             0x800'07bb    0x26  Code  Gb  list.o [1]
 uxSchedulerSuspended    0x2000'4628     0x4  Data  Lc  tasks.o [1]
 uxTaskNumber            0x2000'461c     0x4  Data  Lc  tasks.o [1]
 uxTopReadyPriority      0x2000'4608     0x4  Data  Lc  tasks.o [1]
-vFan                     0x800'0e81    0x10  Code  Gb  main.o [1]
+vFan                     0x800'0ec5    0x10  Code  Gb  main.o [1]
 vListInitialise          0x800'0749    0x1e  Code  Gb  list.o [1]
 vListInitialiseItem      0x800'0767     0x6  Code  Gb  list.o [1]
 vListInsert              0x800'0785    0x36  Code  Gb  list.o [1]
@@ -415,7 +415,7 @@ xYieldPending           0x2000'4614     0x4  Data  Lc  tasks.o [1]
 [4] = rt7M_tl.a
 [5] = shb_l.a
 
-   4'352 bytes of readonly  code memory
+   4'324 bytes of readonly  code memory
       84 bytes of readonly  data memory
   20'014 bytes of readwrite data memory
 

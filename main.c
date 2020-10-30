@@ -189,6 +189,8 @@ static const UARTInitStructure_t UARTInitStr =
 
 int main()
 {
+	
+	
   RCC_DeInit();
   if(!ClockInit()){
     GPIO_EXTI_Init();
