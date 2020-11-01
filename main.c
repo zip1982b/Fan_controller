@@ -57,6 +57,7 @@ static void _sprint_buffer(cayenne_lpp_t *lpp, char *payload_string, char *dst)
 }
 
 
+
 //AT commands for modem
 const  char check_link[] = "AT\r\n";
 const  char answer_check_link[] = "+AT: OK\r\n";
@@ -206,7 +207,7 @@ int main()
 	//xQueue_data_for_Fan = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	
 	
-    //xTaskCreate(vTemp_Humi_measurement, "temperature and humidity measurement", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+    xTaskCreate(vTemp_Humi_measurement, "temperature and humidity measurement", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
     xTaskCreate(vFan, "fan operation", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
     //xTaskCreate(vLoRaWAN_modem, "RHF78-052 operation", 512, NULL, 2, NULL);
     
@@ -224,31 +225,40 @@ int main()
 /**********TASKS***************/
 void vFan(void *arg){
   
+  
   while(1){
-    //PortSetHi();
-    vTaskDelay(3000 / portTICK_RATE_MS);
-    //PortSetLow();
-	DHT22_Start();
-    //vTaskDelay(5000 / portTICK_RATE_MS);
+    PortSetHi();
+    vTaskDelay(1000 / portTICK_RATE_MS);
+    PortSetLow();
+    vTaskDelay(1000 / portTICK_RATE_MS);
   }
 }
 
 
 
 void vTemp_Humi_measurement(void *arg){
+	
 	cayenne_lpp_t temp_humi = { 0 }; //starting init
 	float celsius = 0.2;
 	float humidity = 20.5;
+	
+	TIM3_Mode(OUTPUT);
+	vTaskDelay(2000 / portTICK_RATE_MS);
+	DHT22_Start();
+	
   while(1){
+	/*  
 	cayenne_lpp_add_temperature(&temp_humi, 1, celsius); //  |1|103|d|d|dec or |1|67|x|x|hex
 	cayenne_lpp_add_relative_humidity(&temp_humi, 1, humidity); //  |1|104|d|d|dec or |1|68|x|x|hex
 	xQueueSendToBack(xQueue_for_send_to_APServer, &temp_humi, 100/portTICK_RATE_MS); // to APP server
 	//xQueueSendToBack(xQueue_data_for_Fan, &temp_humi, 100/portTICK_RATE_MS); // to FAN
-	cayenne_lpp_reset(&temp_humi);
-	vTaskDelay(120000 / portTICK_RATE_MS);
-	
-	celsius = celsius + 0.1;	// measurement temp
-	humidity = humidity + 2.5;	// measurement rh
+	cayenne_lpp_reset(&temp_humi); */
+	vTaskDelay(5000 / portTICK_RATE_MS);
+	TIM3_Mode(OUTPUT);
+	vTaskDelay(2000 / portTICK_RATE_MS);
+	DHT22_Start();
+	//celsius = celsius + 0.1;	// measurement temp
+	//humidity = humidity + 2.5;	// measurement rh
   }
 }
 
