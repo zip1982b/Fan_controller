@@ -14,12 +14,12 @@ void GPIO_EXTI_Init(void)
 	CNF: Open-drain mode
     (external pull-up 10KOhm)
   */
-  SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_0); // alternate open-drain
-  SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_1); // alternate open-drain
+  //SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_0); // alternate open-drain
+  //SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_1); // alternate open-drain
   
   
-  //SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_0); // CNF0 = 1 Open-drain
-  //CLEAR_BIT(GPIOA->CRL, GPIO_CRL_CNF6_1); // CNF1 = 0
+  SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_0); // CNF0 = 1 Open-drain
+  CLEAR_BIT(GPIOA->CRL, GPIO_CRL_CNF6_1); // CNF1 = 0
   
   
   CLEAR_BIT(GPIOA->CRL, GPIO_CRL_MODE6_0); // 0
@@ -64,6 +64,12 @@ void PortSetLow(void)
 {
   GPIOC->BRR = (1<<13);//GPIOB->ODR &= ~(1<<13);
 }
+
+
+
+
+
+
 
 
 /*

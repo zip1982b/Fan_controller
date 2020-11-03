@@ -26,7 +26,7 @@ void vFan(void *arg);
 void vTemp_Humi_measurement(void *arg);
 void vLoRaWAN_modem(void *arg);
 
-
+void DHT22_Start(void);
 
 static void _print_buffer(cayenne_lpp_t *lpp)
 {
@@ -196,7 +196,7 @@ int main()
   if(!ClockInit()){
     GPIO_EXTI_Init();
 	UART_Init(2, &UARTInitStr);
-	TIM3_Init();
+	
 	
 	
 	
@@ -242,8 +242,7 @@ void vTemp_Humi_measurement(void *arg){
 	float celsius = 0.2;
 	float humidity = 20.5;
 	
-	TIM3_Mode(OUTPUT);
-	vTaskDelay(2000 / portTICK_RATE_MS);
+	
 	DHT22_Start();
 	
   while(1){
@@ -254,8 +253,7 @@ void vTemp_Humi_measurement(void *arg){
 	//xQueueSendToBack(xQueue_data_for_Fan, &temp_humi, 100/portTICK_RATE_MS); // to FAN
 	cayenne_lpp_reset(&temp_humi); */
 	vTaskDelay(5000 / portTICK_RATE_MS);
-	TIM3_Mode(OUTPUT);
-	vTaskDelay(2000 / portTICK_RATE_MS);
+	
 	DHT22_Start();
 	//celsius = celsius + 0.1;	// measurement temp
 	//humidity = humidity + 2.5;	// measurement rh
@@ -805,7 +803,14 @@ void vLoRaWAN_modem(void *arg){
 }
 
 
-
+void DHT22_Start(void){
+	GPIOA->BRR = (1<<6);
+	vTaskDelay(15 / portTICK_RATE_MS);
+	GPIOA->BSRR = (1<<6);
+	TIM3_Init();
+	
+	
+}
 
 
 

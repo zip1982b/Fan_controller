@@ -15,9 +15,9 @@ typedef enum {
 
 
 void TIM3_Init(void);
-void TIM3_Mode(eMode mode);
 
-void DHT22_Start(void);
+
+
 
 
 
