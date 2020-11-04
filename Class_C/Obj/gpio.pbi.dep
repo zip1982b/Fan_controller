@@ -12,4 +12,5 @@ gpio.pbi: D:\workspace\Fan_controller\gpio.c \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\cmsis_iar.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c/iccarm_builtin.h \
   D:\workspace\Fan_controller\CMSIS\inc/core_cmFunc.h \
-  D:\workspace\Fan_controller\CMSIS\inc/system_stm32f1xx.h
+  D:\workspace\Fan_controller\CMSIS\inc/system_stm32f1xx.h \
+  D:\workspace\Fan_controller\inc\gpio.h

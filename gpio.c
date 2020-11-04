@@ -1,31 +1,11 @@
 #include "stm32f1xx.h"
-
+#include "gpio.h"
 void GPIO_EXTI_Init(void)
 {
   RCC->APB2ENR |= RCC_APB2ENR_IOPAEN; //Тактирование GPIOA = PA6-DHT22
   RCC->APB2ENR |= RCC_APB2ENR_IOPBEN; //Тактирование GPIOB = PB12-Zero_Sensor, PB6-FAN
   RCC->APB2ENR |= RCC_APB2ENR_IOPCEN; // enable GPIOC LED
   RCC->APB2ENR |= RCC_APB2ENR_AFIOEN; //Тактирование AFIO
-
-  /*
-    Настройка GPIO
-    Пин: PA6 - DHT22
-	MODE: output 2 MHz
-	CNF: Open-drain mode
-    (external pull-up 10KOhm)
-  */
-  //SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_0); // alternate open-drain
-  //SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_1); // alternate open-drain
-  
-  
-  SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_0); // CNF0 = 1 Open-drain
-  CLEAR_BIT(GPIOA->CRL, GPIO_CRL_CNF6_1); // CNF1 = 0
-  
-  
-  CLEAR_BIT(GPIOA->CRL, GPIO_CRL_MODE6_0); // 0
-  SET_BIT(GPIOA->CRL, GPIO_CRL_MODE6_1); // 1 MODE: output 2 MHz
-  
-  GPIOA->BSRR = (1<<6);
   
   /*
 	Пин: PC13 - LED
@@ -51,7 +31,37 @@ void GPIO_EXTI_Init(void)
   //NVIC_EnableIRQ(EXTI13_IRQn);  //Разрешаем прерывание в контроллере прерываний 13 канал
 }
 
-
+void GPIO_PA6_Mode(eMode mode){
+	if(mode == OUTPUT){
+		
+		/*
+		Настройка GPIO
+		Пин: PA6 - DHT22
+		MODE: output 2 MHz
+		CNF: alternate Open-drain mode
+		(external pull-up 10KOhm)
+		*/
+		SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_0); // alternate open-drain
+		SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_1); // alternate open-drain
+  
+		//SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_0); // CNF0 = 1 Open-drain
+		//CLEAR_BIT(GPIOA->CRL, GPIO_CRL_CNF6_1); // CNF1 = 0
+  
+		CLEAR_BIT(GPIOA->CRL, GPIO_CRL_MODE6_0); // 0
+		SET_BIT(GPIOA->CRL, GPIO_CRL_MODE6_1); // 1 MODE: output 2 MHz
+  
+		//GPIOA->BSRR = (1<<6);
+	}
+	else if(mode == INPUT){
+		/*PA6 input floating*/
+		SET_BIT(GPIOA->CRL, GPIO_CRL_CNF6_0); // 1
+		CLEAR_BIT(GPIOA->CRL, GPIO_CRL_CNF6_1); // 0
+  
+		CLEAR_BIT(GPIOA->CRL, GPIO_CRL_MODE6_0);
+		CLEAR_BIT(GPIOA->CRL, GPIO_CRL_MODE6_1); //input
+	}
+	
+}
 
 
 void PortSetHi(void)

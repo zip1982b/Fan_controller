@@ -7,15 +7,11 @@
 #define TIM_EnableCounter(TIMx) SET_BIT(TIMx->CR1, TIM_CR1_CEN)
 #define TIM_DisableCounter(TIMx) CLEAR_BIT(TIMx->CR1, TIM_CR1_CEN)
 
-typedef enum {
-	OUTPUT,
-	INPUT
-} eMode;
 
 
 
 void TIM3_Init(void);
-
+void TIM3_Mode(eMode mode);
 
 
 

@@ -1,4 +1,5 @@
 timer.pbi: D:\workspace\Fan_controller\inc\timer.h \
+  D:\workspace\Fan_controller\inc\gpio.h \
   D:\workspace\Fan_controller\CMSIS\inc\system_stm32f1xx.h \
   D:\workspace\Fan_controller\CMSIS\inc\core_cmFunc.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\iccarm_builtin.h \

@@ -26,7 +26,7 @@ void vFan(void *arg);
 void vTemp_Humi_measurement(void *arg);
 void vLoRaWAN_modem(void *arg);
 
-void DHT22_Start(void);
+
 
 static void _print_buffer(cayenne_lpp_t *lpp)
 {
@@ -169,8 +169,6 @@ const  char answer_Class[] = "+CLASS: C\r\n";
 const char messages_from_APP[] = "+MSG: PORT: 2; RX: \"\n";
 
 
-
-
 static const UARTInitStructure_t UARTInitStr = 
 {
   .bus_freq = 36000000,
@@ -182,30 +180,17 @@ static const UARTInitStructure_t UARTInitStr =
 
 
 
-
-
-
-
-
-
 int main()
 {
-	
-	
   RCC_DeInit();
   if(!ClockInit()){
-    GPIO_EXTI_Init();
+    GPIO_EXTI_Init(); // PA6 Alternate open-drain
 	UART_Init(2, &UARTInitStr);
-	
-	
-	
-	
-	
+	TIM3_Init();
 	
 	//xQueue_for_send_to_APServer = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	//xQueue_received_data_from_app_server = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	//xQueue_data_for_Fan = xQueueCreate(5, sizeof(cayenne_lpp_t));
-	
 	
     xTaskCreate(vTemp_Humi_measurement, "temperature and humidity measurement", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
     xTaskCreate(vFan, "fan operation", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
@@ -224,13 +209,11 @@ int main()
 
 /**********TASKS***************/
 void vFan(void *arg){
-  
-  
   while(1){
     PortSetHi();
-    vTaskDelay(1000 / portTICK_RATE_MS);
+    vTaskDelay(500 / portTICK_RATE_MS);
     PortSetLow();
-    vTaskDelay(1000 / portTICK_RATE_MS);
+    vTaskDelay(500 / portTICK_RATE_MS);
   }
 }
 
@@ -238,12 +221,18 @@ void vFan(void *arg){
 
 void vTemp_Humi_measurement(void *arg){
 	
-	cayenne_lpp_t temp_humi = { 0 }; //starting init
-	float celsius = 0.2;
-	float humidity = 20.5;
+	//cayenne_lpp_t temp_humi = { 0 }; //starting init
+	//float celsius = 0.2;
+	//float humidity = 20.5;
+	
+	vTaskDelay(5000 / portTICK_RATE_MS);
 	
 	
-	DHT22_Start();
+	GPIO_PA6_Mode(OUTPUT);
+	TIM3_Mode(OUTPUT);
+	vTaskDelay(2000 / portTICK_RATE_MS);
+	WRITE_REG(TIM3->CCR1, 5); // T=1uS, f=1000000 Hz, need 18 mSec delay (5-18005)
+	TIM_EnableCounter(TIM3);
 	
   while(1){
 	/*  
@@ -253,8 +242,12 @@ void vTemp_Humi_measurement(void *arg){
 	//xQueueSendToBack(xQueue_data_for_Fan, &temp_humi, 100/portTICK_RATE_MS); // to FAN
 	cayenne_lpp_reset(&temp_humi); */
 	vTaskDelay(5000 / portTICK_RATE_MS);
+	GPIO_PA6_Mode(OUTPUT);
+	TIM3_Mode(OUTPUT);
+	vTaskDelay(2000 / portTICK_RATE_MS);
+	WRITE_REG(TIM3->CCR1, 5); // T=1uS, f=1000000 Hz, need 18 mSec delay (5-18005)
+	TIM_EnableCounter(TIM3);
 	
-	DHT22_Start();
 	//celsius = celsius + 0.1;	// measurement temp
 	//humidity = humidity + 2.5;	// measurement rh
   }
@@ -800,16 +793,6 @@ void vLoRaWAN_modem(void *arg){
 	}
 	//vTaskDelay(3000 / portTICK_RATE_MS);
   }
-}
-
-
-void DHT22_Start(void){
-	GPIOA->BRR = (1<<6);
-	vTaskDelay(15 / portTICK_RATE_MS);
-	GPIOA->BSRR = (1<<6);
-	TIM3_Init();
-	
-	
 }
 
 
