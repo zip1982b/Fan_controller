@@ -184,15 +184,15 @@ int main()
 {
   RCC_DeInit();
   if(!ClockInit()){
-    GPIO_EXTI_Init(); // PA6 Alternate open-drain
+    GPIO_EXTI_Init(); 
 	UART_Init(2, &UARTInitStr);
-	TIM3_Init();
+	TIM3_Init(); // PSC=36 ARR=18000
 	
 	//xQueue_for_send_to_APServer = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	//xQueue_received_data_from_app_server = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	//xQueue_data_for_Fan = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	
-    xTaskCreate(vTemp_Humi_measurement, "temperature and humidity measurement", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+    xTaskCreate(vTemp_Humi_measurement, "temperature and humidity measurement", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
     xTaskCreate(vFan, "fan operation", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
     //xTaskCreate(vLoRaWAN_modem, "RHF78-052 operation", 512, NULL, 2, NULL);
     
@@ -228,11 +228,17 @@ void vTemp_Humi_measurement(void *arg){
 	vTaskDelay(5000 / portTICK_RATE_MS);
 	
 	
-	GPIO_PA6_Mode(OUTPUT);
+	GPIO_PA6_Mode(OUTPUT); // 1 - hi-z
+	vTaskDelay(3000 / portTICK_RATE_MS);
 	TIM3_Mode(OUTPUT);
 	vTaskDelay(2000 / portTICK_RATE_MS);
-	WRITE_REG(TIM3->CCR1, 5); // T=1uS, f=1000000 Hz, need 18 mSec delay (5-18005)
-	TIM_EnableCounter(TIM3);
+	
+	//GPIOA->BRR = (1<<6); // 0 
+	//GPIOA->BSRR = (1<<6); // 1
+	//vTaskDelay(100 / portTICK_RATE_MS); // 100 mSec
+	
+	GPIOA->BRR = (1<<6); // 0 - Start signal
+	TIM_EnableCounter(TIM3); // 18 mSec delay
 	
   while(1){
 	/*  
@@ -241,12 +247,19 @@ void vTemp_Humi_measurement(void *arg){
 	xQueueSendToBack(xQueue_for_send_to_APServer, &temp_humi, 100/portTICK_RATE_MS); // to APP server
 	//xQueueSendToBack(xQueue_data_for_Fan, &temp_humi, 100/portTICK_RATE_MS); // to FAN
 	cayenne_lpp_reset(&temp_humi); */
-	vTaskDelay(5000 / portTICK_RATE_MS);
-	GPIO_PA6_Mode(OUTPUT);
-	TIM3_Mode(OUTPUT);
-	vTaskDelay(2000 / portTICK_RATE_MS);
-	WRITE_REG(TIM3->CCR1, 5); // T=1uS, f=1000000 Hz, need 18 mSec delay (5-18005)
-	TIM_EnableCounter(TIM3);
+	vTaskDelay(10000 / portTICK_RATE_MS);
+	
+	
+          GPIO_PA6_Mode(OUTPUT); // 1 - hi-z
+          vTaskDelay(3000 / portTICK_RATE_MS);
+          TIM3_Mode(OUTPUT);
+          vTaskDelay(2000 / portTICK_RATE_MS);
+	
+          GPIOA->BRR = (1<<6); // 0 - Start signal
+          TIM_EnableCounter(TIM3); // 18 mSec delay
+       
+        
+	
 	
 	//celsius = celsius + 0.1;	// measurement temp
 	//humidity = humidity + 2.5;	// measurement rh
