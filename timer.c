@@ -9,14 +9,15 @@ void TIM3_Init(void)
 {
   SET_BIT(RCC->APB1ENR, RCC_APB1ENR_TIM3EN); 
   NVIC_EnableIRQ(TIM3_IRQn);
-  WRITE_REG(TIM3->PSC, 36); //f=1MHz
-  WRITE_REG(TIM3->ARR, 18000); // delay 18mSec
+  WRITE_REG(TIM3->PSC, 71); //f=1MHz 72-1 = 71
+  
   SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_TIM3_STOP); //TIM3 counter stopped when core is halted
 }
 
 
 void TIM3_Mode(eMode mode){
 	if(mode == OUTPUT){
+		WRITE_REG(TIM3->ARR, 17999); // delay 18mSec 18000-1 = 17999
 		//CLEAR_BIT(TIM3->CCER, TIM_CCER_CC1E); // Note: CC1S bits are writable only when the channel is OFF (CC1E = 0 in TIMx_CCER)
 		//CLEAR_BIT(TIM3->CCMR1, TIM_CCMR1_CC1S_0); 
 		//CLEAR_BIT(TIM3->CCMR1, TIM_CCMR1_CC1S_1); // 00: CC1 channel is configured as output
@@ -41,7 +42,7 @@ void TIM3_Mode(eMode mode){
 		CLEAR_BIT(TIM3->DIER, TIM_DIER_CC2IE); //disable interrupt
 	}
 	else if(mode == INPUT){
-		WRITE_REG(TIM3->ARR, 65000); // 
+		WRITE_REG(TIM3->ARR, 64999); // 
 		
 		CLEAR_BIT(TIM3->CCER, TIM_CCER_CC1E); // Note: CC1S bits are writable only when the channel is OFF (CC1E = 0 in TIMx_CCER)
 		SET_BIT(TIM3->CCMR1, TIM_CCMR1_CC1S_0); // only when the channel is OFF (CC1E = 0 in TIMx_CCER)
@@ -87,12 +88,12 @@ void TIM3_IRQHandler(void)
 {
   if(READ_BIT(TIM3->SR, TIM_SR_UIF)){
     CLEAR_BIT(TIM3->SR, TIM_SR_UIF);
-	if(READ_REG(TIM3->ARR) == 18000){
-		GPIOA->BSRR = (1<<6);
-		TIM_DisableCounter(TIM3);
+	if(READ_REG(TIM3->ARR) == 17999){
+		GPIOA->BSRR = (1<<6); // 1
+		//TIM_DisableCounter(TIM3);
 		GPIO_PA6_Mode(INPUT);
 		TIM3_Mode(INPUT);
-		TIM_EnableCounter(TIM3);
+		//TIM_EnableCounter(TIM3);
 	}
   }
 

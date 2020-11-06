@@ -186,7 +186,7 @@ int main()
   if(!ClockInit()){
     GPIO_EXTI_Init(); 
 	UART_Init(2, &UARTInitStr);
-	TIM3_Init(); // PSC=36 ARR=18000
+	TIM3_Init(); // 
 	
 	//xQueue_for_send_to_APServer = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	//xQueue_received_data_from_app_server = xQueueCreate(5, sizeof(cayenne_lpp_t));
@@ -225,18 +225,12 @@ void vTemp_Humi_measurement(void *arg){
 	//float celsius = 0.2;
 	//float humidity = 20.5;
 	
-	vTaskDelay(5000 / portTICK_RATE_MS);
+	//vTaskDelay(10000 / portTICK_RATE_MS);
 	
 	
 	GPIO_PA6_Mode(OUTPUT); // 1 - hi-z
-	vTaskDelay(3000 / portTICK_RATE_MS);
-	TIM3_Mode(OUTPUT);
 	vTaskDelay(2000 / portTICK_RATE_MS);
-	
-	//GPIOA->BRR = (1<<6); // 0 
-	//GPIOA->BSRR = (1<<6); // 1
-	//vTaskDelay(100 / portTICK_RATE_MS); // 100 mSec
-	
+	TIM3_Mode(OUTPUT);
 	GPIOA->BRR = (1<<6); // 0 - Start signal
 	TIM_EnableCounter(TIM3); // 18 mSec delay
 	
@@ -254,7 +248,6 @@ void vTemp_Humi_measurement(void *arg){
           vTaskDelay(3000 / portTICK_RATE_MS);
           TIM3_Mode(OUTPUT);
           vTaskDelay(2000 / portTICK_RATE_MS);
-	
           GPIOA->BRR = (1<<6); // 0 - Start signal
           TIM_EnableCounter(TIM3); // 18 mSec delay
        
