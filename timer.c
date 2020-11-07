@@ -8,7 +8,7 @@ void TIM3_Init(void)
 {
   SET_BIT(RCC->APB1ENR, RCC_APB1ENR_TIM3EN); 
   NVIC_EnableIRQ(TIM3_IRQn);
-  WRITE_REG(TIM3->PSC, 36); //f=1MHz
+  WRITE_REG(TIM3->PSC, 71); //f=1MHz
   WRITE_REG(TIM3->ARR, 65000); // T=1uS, 
   
   SET_BIT(DBGMCU->CR, DBGMCU_CR_DBG_TIM3_STOP); //TIM3 counter stopped when core is halted
@@ -97,8 +97,9 @@ void TIM3_IRQHandler(void)
 {
   if(READ_BIT(TIM3->SR, TIM_SR_UIF)){
     CLEAR_BIT(TIM3->SR, TIM_SR_UIF);
+	WRITE_REG(TIM3->CCR1, 5);
 	//TIM_DisableCounter(TIM3);
-	n = 0;
+	//n = 0;
   }
 
 
@@ -106,6 +107,7 @@ void TIM3_IRQHandler(void)
     CLEAR_BIT(TIM3->SR, TIM_SR_CC1IF);
 	
 	if(READ_REG(TIM3->CCR1) == 5) { WRITE_REG(TIM3->CCR1, 18005); }
+	/*
 	else if (READ_REG(TIM3->CCR1) == 18005){
 		
 		//переводим ch1 TIM3 на вход
@@ -115,13 +117,17 @@ void TIM3_IRQHandler(void)
 		//TIM_EnableCounter(TIM3);
 	}
 	else CLEAR_REG(TIM3->CNT);
+	*/
   }
   
+  
+  /*
   if(READ_BIT(TIM3->SR, TIM_SR_CC2IF) && n<=40){
     CLEAR_BIT(TIM3->SR, TIM_SR_CC2IF);
 	time[0] = READ_REG(TIM3->CCR2);
 	n++;
   }
+  */
   
   
 }

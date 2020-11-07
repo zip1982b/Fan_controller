@@ -22,10 +22,9 @@ void GPIO_EXTI_Init(void)
   //CLEAR_BIT(GPIOA->CRL, GPIO_CRL_CNF6_1); // CNF1 = 0
   
   
-  CLEAR_BIT(GPIOA->CRL, GPIO_CRL_MODE6_0); // 0
-  SET_BIT(GPIOA->CRL, GPIO_CRL_MODE6_1); // 1 MODE: output 2 MHz
+  SET_BIT(GPIOA->CRL, GPIO_CRL_MODE6_0); // 1
+  SET_BIT(GPIOA->CRL, GPIO_CRL_MODE6_1); // 1 MODE: output 50 MHz
   
-  GPIOA->BSRR = (1<<6);
   
   /*
 	Пин: PC13 - LED
