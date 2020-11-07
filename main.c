@@ -182,12 +182,6 @@ static const UARTInitStructure_t UARTInitStr =
 
 
 
-
-
-
-
-
-
 int main()
 {
 	
@@ -198,9 +192,7 @@ int main()
     GPIO_EXTI_Init();
 	TIM3_Init();
 	
-	
-	
-	
+
 	
 	//xQueue_for_send_to_APServer = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	//xQueue_received_data_from_app_server = xQueueCreate(5, sizeof(cayenne_lpp_t));
@@ -242,9 +234,17 @@ void vTemp_Humi_measurement(void *arg){
 	//float celsius = 0.2;
 	//float humidity = 20.5;
 	
+	
+	//SmodeT = 0;
+	GPIO_PA6_Mode(OUTPUT); // 1 - hi-z
 	TIM3_Mode(OUTPUT);
 	vTaskDelay(2000 / portTICK_RATE_MS);
-	DHT22_Start();
+	WRITE_REG(TIM3->CCR1, 5); // T=1uS, f=1000000 Hz, need 18 mSec delay (5-18005)
+	TIM_EnableCounter(TIM3);
+	
+	
+	
+	
 	
   while(1){
 	/*  
@@ -253,9 +253,16 @@ void vTemp_Humi_measurement(void *arg){
 	xQueueSendToBack(xQueue_for_send_to_APServer, &temp_humi, 100/portTICK_RATE_MS); // to APP server
 	//xQueueSendToBack(xQueue_data_for_Fan, &temp_humi, 100/portTICK_RATE_MS); // to FAN
 	cayenne_lpp_reset(&temp_humi); */
-	vTaskDelay(5000 / portTICK_RATE_MS);
-	//TIM3_Mode(OUTPUT);
+	//modeT = 0;
+	GPIO_PA6_Mode(OUTPUT); // 1 - hi-z
+	TIM3_Mode(OUTPUT);
 	vTaskDelay(2000 / portTICK_RATE_MS);
+	WRITE_REG(TIM3->CCR1, 5); // T=1uS, f=1000000 Hz, need 18 mSec delay (5-18005)
+	
+	
+	vTaskDelay(10000 / portTICK_RATE_MS);
+	
+	
 	//DHT22_Start();
 	//celsius = celsius + 0.1;	// measurement temp
 	//humidity = humidity + 2.5;	// measurement rh
