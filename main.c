@@ -17,7 +17,7 @@
 
 
 xQueueHandle xQueue_for_send_to_APServer;
-//xQueueHandle xQueue_received_data_from_app_server;
+xQueueHandle xQueue_received_data_from_app_server;
 xQueueHandle xQueue_data_for_Fan;
 
 
@@ -202,14 +202,14 @@ int main()
 	
 	
 	
-	//xQueue_for_send_to_APServer = xQueueCreate(5, sizeof(cayenne_lpp_t));
-	//xQueue_received_data_from_app_server = xQueueCreate(5, sizeof(cayenne_lpp_t));
-	//xQueue_data_for_Fan = xQueueCreate(5, sizeof(cayenne_lpp_t));
+	xQueue_for_send_to_APServer = xQueueCreate(5, sizeof(cayenne_lpp_t));
+	xQueue_received_data_from_app_server = xQueueCreate(5, sizeof(cayenne_lpp_t));
+	xQueue_data_for_Fan = xQueueCreate(5, sizeof(cayenne_lpp_t));
 	
 	
     xTaskCreate(vTemp_Humi_measurement, "temperature and humidity measurement", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
     xTaskCreate(vFan, "fan operation", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-    //xTaskCreate(vLoRaWAN_modem, "RHF78-052 operation", 512, NULL, 2, NULL);
+    xTaskCreate(vLoRaWAN_modem, "RHF78-052 operation", 512, NULL, 2, NULL);
     
     vTaskStartScheduler();
   }
@@ -246,12 +246,12 @@ void vTemp_Humi_measurement(void *arg){
 	DHT22_Start();
 	
   while(1){
-	/*  
+	  
 	cayenne_lpp_add_temperature(&temp_humi, 1, celsius); //  |1|103|d|d|dec or |1|67|x|x|hex
 	cayenne_lpp_add_relative_humidity(&temp_humi, 1, humidity); //  |1|104|d|d|dec or |1|68|x|x|hex
 	xQueueSendToBack(xQueue_for_send_to_APServer, &temp_humi, 100/portTICK_RATE_MS); // to APP server
-	//xQueueSendToBack(xQueue_data_for_Fan, &temp_humi, 100/portTICK_RATE_MS); // to FAN
-	cayenne_lpp_reset(&temp_humi); */
+	xQueueSendToBack(xQueue_data_for_Fan, &temp_humi, 100/portTICK_RATE_MS); // to FAN
+	cayenne_lpp_reset(&temp_humi); 
 	vTaskDelay(5000 / portTICK_RATE_MS);
 	
 	DHT22_Start();
