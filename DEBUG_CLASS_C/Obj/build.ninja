@@ -36,12 +36,13 @@ build gpio.pbi : index gpio.xcl
 build main.pbi : index main.xcl
 build modemRHF78-052.pbi : index modemRHF78-052.xcl
 build RingFIFO.pbi : index RingFIFO.xcl
+build timer.pbi : index timer.xcl
 build uart.pbi : index uart.xcl
 build Fan_controller_part0.pbi : link system_stm32f1xx.pbi croutine.pbi event_groups.pbi heap_1.pbi
 build Fan_controller_part1.pbi : link list.pbi port.pbi queue.pbi stream_buffer.pbi
 build Fan_controller_part2.pbi : link tasks.pbi timers.pbi cayenne_lpp.pbi clock.pbi
 build Fan_controller_part3.pbi : link gpio.pbi main.pbi modemRHF78-052.pbi RingFIFO.pbi
-build Fan_controller_part4.pbi : link uart.pbi
+build Fan_controller_part4.pbi : link timer.pbi uart.pbi
 build Fan_controller.pbd : link Fan_controller_part0.pbi Fan_controller_part1.pbi Fan_controller_part2.pbi Fan_controller_part3.pbi Fan_controller_part4.pbi
 build Fan_controller.pbw : browsedata Fan_controller.pbd
 

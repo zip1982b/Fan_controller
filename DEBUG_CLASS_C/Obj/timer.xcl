@@ -1,15 +1,15 @@
-"C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\src\croutine.c"
+"C:\Users\MrZang\IAR_prj\Fan_controller\timer.c"
 -std=c11
 -ferror-limit=0
 -fbracket-depth=512
 -funsigned-char
 -MD
 -MF
-C:\Users\MrZang\IAR_prj\Fan_controller\Class_C\Obj\croutine.pbi.dep
+C:\Users\MrZang\IAR_prj\Fan_controller\DEBUG_CLASS_C\Obj\timer.pbi.dep
 -o
-croutine.pbi
+timer.pbi
 -I
-C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\src
+C:\Users\MrZang\IAR_prj\Fan_controller
 -I
 C:\Users\MrZang\IAR_prj\Fan_controller\
 -I
@@ -305,7 +305,7 @@ C:\Users\MrZang\IAR_prj\Fan_controller\FreeRTOS\inc
 -D__EDG_FLOAT80_ENABLING_POSSIBLE=0
 -D__EDG_FLOAT128_ENABLING_POSSIBLE=0
 -D__EDG_INT128_EXTENSIONS_ALLOWED=0
--DCLASS_C=1
+-DDEBUG_CLASS_C=1
 -D_DLIB_CONFIG_FILE_HEADER_NAME="C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.4\arm\inc\c\DLib_Config_Normal.h"
 -D_DLIB_CONFIG_FILE_STRING="C:\\Program Files (x86)\\IAR Systems\\Embedded Workbench 8.4\\arm\\inc\\c\\DLib_Config_Normal.h"
 -D__VERSION__="IAR ANSI C/C++ Compiler V8.50.4.261/W32 for ARM"

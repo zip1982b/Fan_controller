@@ -239,24 +239,27 @@ void vFan(void *arg){
 void vTemp_Humi_measurement(void *arg){
 	
 	cayenne_lpp_t temp_humi = { 0 }; //starting init
-	float celsius = 0.2;
-	float humidity = 20.5;
+	float temp = 0.0;
+	float humi = 0.0;
 	
 	
-	DHT22_Start();
 	
   while(1){
 	  
-	cayenne_lpp_add_temperature(&temp_humi, 1, celsius); //  |1|103|d|d|dec or |1|67|x|x|hex
-	cayenne_lpp_add_relative_humidity(&temp_humi, 1, humidity); //  |1|104|d|d|dec or |1|68|x|x|hex
+	cayenne_lpp_add_temperature(&temp_humi, 1, temp); //  |1|103|d|d|dec or |1|67|x|x|hex
+	cayenne_lpp_add_relative_humidity(&temp_humi, 1, humi); //  |1|104|d|d|dec or |1|68|x|x|hex
 	xQueueSendToBack(xQueue_for_send_to_APServer, &temp_humi, 100/portTICK_RATE_MS); // to APP server
 	xQueueSendToBack(xQueue_data_for_Fan, &temp_humi, 100/portTICK_RATE_MS); // to FAN
+	
+	
 	cayenne_lpp_reset(&temp_humi); 
 	vTaskDelay(5000 / portTICK_RATE_MS);
 	
-	DHT22_Start();
-	//celsius = celsius + 0.1;	// measurement temp
-	//humidity = humidity + 2.5;	// measurement rh
+	get_data_from_DHT22();
+	vTaskDelay(2000 / portTICK_RATE_MS);
+	data_conversion(&humi, &temp);
+	
+	vTaskDelay(5000 / portTICK_RATE_MS);
   }
 }
 
