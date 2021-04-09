@@ -26,7 +26,7 @@ void vFan(void *arg);
 void vTemp_Humi_measurement(void *arg);
 void vLoRaWAN_modem(void *arg);
 
-void DHT22_Start(void);
+
 
 static void _print_buffer(cayenne_lpp_t *lpp)
 {
@@ -196,7 +196,7 @@ int main()
   if(!ClockInit()){
     GPIO_EXTI_Init();
 	UART_Init(2, &UARTInitStr);
-	
+	TIM3_Init();
 	
 	
 	
@@ -209,7 +209,7 @@ int main()
 	
     xTaskCreate(vTemp_Humi_measurement, "temperature and humidity measurement", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
     xTaskCreate(vFan, "fan operation", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-    xTaskCreate(vLoRaWAN_modem, "RHF78-052 operation", 512, NULL, 2, NULL);
+    //xTaskCreate(vLoRaWAN_modem, "RHF78-052 operation", 512, NULL, 2, NULL);
     
     vTaskStartScheduler();
   }
@@ -805,15 +805,6 @@ void vLoRaWAN_modem(void *arg){
   }
 }
 
-
-void DHT22_Start(void){
-	GPIOA->BRR = (1<<6);
-	vTaskDelay(15 / portTICK_RATE_MS);
-	GPIOA->BSRR = (1<<6);
-	TIM3_Init();
-	
-	
-}
 
 
 

@@ -1,4 +1,4 @@
-cayenne_lpp.pbi: C:\Users\MrZang\IAR_prj\Fan_controller\cayenne_lpp.c \
+cayenne_lpp.pbi: D:\workspace\Fan_controller\cayenne_lpp.c \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\inttypes.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\ycheck.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\stdint.h \
@@ -10,4 +10,4 @@ cayenne_lpp.pbi: C:\Users\MrZang\IAR_prj\Fan_controller\cayenne_lpp.c \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\string.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\ysizet.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.4\arm\inc\c\DLib_Product_string.h \
-  C:\Users\MrZang\IAR_prj\Fan_controller\inc\cayenne_lpp.h
+  D:\workspace\Fan_controller\inc\cayenne_lpp.h
